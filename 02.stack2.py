@@ -1,10 +1,21 @@
+class Node:
+    def __init__(self, value):
+        self.data = value
+        self.prev = None
+
+    def __str__(self):
+        return str(self.data)
+
+
 class Stack:
     def __init__(self):
-        self.data = list()
+        self.head = None
 
     # 데이터 삽입
     def push(self, value):
-        self.data.append(value)
+        new_node = Node(value)
+        new_node.prev = self.head
+        self.head = new_node
 
     # 데이터 삭제
     def pop(self):
@@ -12,7 +23,9 @@ class Stack:
             # 언더플로우 예외 처리
             return
         else:
-            return self.data.pop(-1)
+            value = self.head.data
+            self.head = self.head.prev
+            return value
 
     # 마지막 원소 확인
     def peek(self):
@@ -20,12 +33,11 @@ class Stack:
             # 언더플로우 예외 처리
             return
         else:
-            last_index = len(self.data) - 1
-            return self.data[last_index]
+            return self.head.data
 
     # 비었는지 확인
     def is_empty(self):
-        return not self.data
+        return not self.head
 
 
 if __name__ == '__main__':
